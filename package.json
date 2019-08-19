@@ -10,18 +10,20 @@
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit",
     "lint": "eslint --ext .js,.vue src test/unit",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "report": "cross-env NODE_ENV=production env_config=sit npm_config_preview=true  npm_config_report=true node build/build.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.8.2",
-    "js-cookie": "^2.2.0",
+    "js-cookie": "^2.2.1",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "vue": "^2.5.2",
     "vue-i18n": "^8.11.2",
     "vue-router": "^3.0.1",
-    "vuex": "^3.1.1"
+    "vuex": "^3.1.1",
+    "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
