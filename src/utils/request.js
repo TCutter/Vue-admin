@@ -2,59 +2,59 @@ import axios from 'axios'
 import store from '@/store'
 import { Message } from 'element-ui'
 
-const request = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // url = baseURL + requestURL
-  timeout: 3000
-})
+axios.defaults.timeout = 3000
+axios.defaults.baseURL = ''
 
-request.interceptors.request.use(config => {
+axios.interceptors.request.use(config => {
   if (store.getters.token) {
     config.headers['token'] = store.getters.token
   }
   return config
 }, error => {
+  console.log(error)
   return Promise.reject(error)
 })
 
-request.interceptors.response.use(res => {
-  
+axios.interceptors.response.use(res => {
+  return res
 }, err => {
-  switch (err.status) {
+  let { response } = err
+  switch (response.status) {
     case 400:
-      err.message = 'Bad Request'
-      break
+        response.message = 'Bad Request'
+        break
     case 401:
-      err.message = 'Unauthorized'
-      break
+        response.message = 'Unauthorized'
+        break
     case 403:
-        err.message = 'Forbidden'
+        response.message = 'Forbidden'
         break
     case 404:
-        err.message = 'Not Found'
+        response.message = 'Not Found'
         break
     case 408:
-        err.message = 'Reqeust Timeout'
+        response.message = 'Reqeust Timeout'
         break
     case 500:
-        err.message = 'Internal Server Error'
+        response.message = 'Internal Server Error'
         break
     case 503:
-        err.message = 'Service Unavailable'
+        response.message = 'Service Unavailable'
         break
     case 504:
-        err.message = 'Gateway Timeout'
+        response.message = 'Gateway Timeout'
         break
     default:
-        err.message = 'Request Error'
+        response.message = 'Request Error'
         break
   }
-
+  response.message = response.status + ' ' + response.message
   Message({
-    message: err.message,
+    message: response.message,
     type: 'error',
     duration: 3 * 1000
   })
   return Promise.reject(err)
 })
 
-export default request
+export default axios

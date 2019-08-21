@@ -13,10 +13,13 @@ import './styles/element-variables.scss'
 import './styles/index.scss'
 
 import './icons'
+import './mock'
+
+Vue.use(Element, {
+  size: store.getters.size || 'medium'
+})
 
 Vue.config.productionTip = false
-
-Vue.use(Element)
 
 /* eslint-disable no-new */
 new Vue({
