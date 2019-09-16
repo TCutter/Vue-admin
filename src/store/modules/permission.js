@@ -7,7 +7,7 @@
  * @author xiao.guo
  *
  * Created at     : 2019-08-19 10:18:06 
- * Last modified  : 2019-08-21 20:29:15
+ * Last modified  : 2019-09-16 10:02:22
  */
 
 import constantRoutes from '@/router/constantRoutes'
@@ -61,7 +61,6 @@ const mutations = {
 
 const actions = {
   generateRoutes ({commit}, roles) {
-    debugger
     return new Promise(resolve => {
       let accessedRoutes
       if (roles.includes('admin')) {
